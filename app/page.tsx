@@ -20,7 +20,7 @@ export default function HomePage() {
 					src="/gradient (4).svg"
 					alt=""
 					fill
-					className="object-cover pointer-events-none select-none -scale-x-100 brightness-50"
+					className="object-cover pointer-events-none select-none -scale-x-100 brightness-[45%]"
 				/>
 			</div>
 			<div

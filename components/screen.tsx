@@ -9,7 +9,10 @@ import { cn } from "@/lib/utils";
 import { AlignJustify, ChevronLeft, Home } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { ScrollArea } from "./ui/scroll-area";
+import { Calendar } from "@/components/ui/calendar"
+import CalendarHighlights from "./calendar-highlights";
 
 interface ScreenProps extends React.HTMLAttributes<HTMLElement> {
 
@@ -20,6 +23,19 @@ export function Screen({
 }: ScreenProps) {
     const [tab, setTab] = useState<string>("home");
 
+    const [time, setTime] = useState<string>("");
+    const [hour12, setHour12] = useState<string>("");
+
+    const [date, setDate] = useState<Date | undefined>(new Date())
+
+    useEffect(() => {
+        setTime(new Date().toLocaleTimeString([], {
+            minute: "numeric",
+            hour: "numeric",
+        }).replace(/AM|PM/, ''));
+        setHour12(new Date().toLocaleTimeString().includes("AM") ? "AM" : "PM");
+    });
+
     return (
         <div
             {...props}
@@ -29,7 +45,7 @@ export function Screen({
             )}
         >
             <div
-                className="bg-white w-full border-[#121212] border-2"
+                className="bg-[#EBE2D9] w-full border-[#121212] border-2"
             >
                 <Tabs
                     defaultValue={tab}
@@ -41,121 +57,104 @@ export function Screen({
                         className="w-full h-full p-8"
                     >
                         <div
-                            className="pb-12"
+                            className="flex flex-wrap gap-4"
                         >
                             <div
-                                className="relative w-36 h-16 mx-auto"
+                                className="bg-white w-48 h-16 drop-shadow flex justify-center items-center"
                             >
-                                <Image
-                                    src="/fridge-google.svg"
-                                    alt=""
-                                    fill
-                                    className="object-contain"
-                                />
+                                <div
+                                    className="flex flex-row items-end"
+                                >
+                                    <div
+                                        className="text-4xl"
+                                    >
+                                        {time}
+                                    </div>
+                                    <div
+                                        className="text-base"
+                                    >
+                                        {hour12}
+                                    </div>
+                                </div>
                             </div>
-                            <SearchBar />
-                        </div>
-                        <div>
                             <div
-                                className="grid justify-left gap-x-12 gap-y-12 w-full text-center p-8"
-                                style={{
-                                    gridTemplateColumns: "repeat(auto-fit, 6rem)",
-                                }}
+                                className="bg-white w-fit h-fit drop-shadow"
                             >
-                                <div
-                                    className="flex flex-col w-24"
+                                <CalendarHighlights/>
+                            </div>
+                            <div
+                                className="bg-white drop-shadow"
+                            >
+                                <ScrollArea
+                                    className="text-left p-2"
                                 >
-                                    <Button
-                                        className="bg-black relative w-24 h-24 rounded-2xl overflow-hidden"
-                                        onClick={() => setTab("chart")}
+                                    <div
+                                        className="px-3 py-2 text-xl"
                                     >
-                                        <Image
-                                            src="/fridge-logo.png"
-                                            alt=""
-                                            fill
-                                        />
-                                    </Button>
-                                    <Label
-                                        className="text-lg leading-5 pt-1"
+                                        Shortcuts
+                                    </div>
+                                    <div
+                                        className="flex flex-col space-y-1"
                                     >
-                                        $FRIDGE Chart
-                                    </Label>
-                                </div>
-                                <div
-                                    className="flex flex-col w-24"
-                                >
-                                    <Link
-                                        href="https://dexscreener.com/solana/8kuwpa5snz7xx5dmbfornfzaluhpbouccbx6vmfeqxbh"
-                                        rel="noopener noreferrer"
-                                        target="_blank"
-                                    >
-                                        <Button
-                                            className="bg-[#24A1DE] relative w-24 h-24 rounded-2xl"
+                                        <Link
+                                            href=""
                                         >
-                                            <Image
-                                                src="/telegram-logo.svg"
-                                                alt=""
-                                                fill
-                                                className="p-0"
-                                            />
-                                        </Button>
-                                    </Link>
-                                    <Label
-                                        className="text-lg leading-5 pt-1"
-                                    >
-                                        Telegram
-                                    </Label>
-                                </div>
-                                <div
-                                    className="flex flex-col w-24"
-                                >
-                                    <Link
-                                        href="https://dexscreener.com/solana/8kuwpa5snz7xx5dmbfornfzaluhpbouccbx6vmfeqxbh"
-                                        rel="noopener noreferrer"
-                                        target="_blank"
-                                    >
-                                        <Button
-                                            className="bg-black relative w-24 h-24 rounded-2xl"
+                                            <Button
+                                                variant="ghost"
+                                                className="w-full h-full justify-start py-2"
+                                            >
+                                                <Image
+                                                    src="telegram-logo.svg"
+                                                    alt=""
+                                                    width={32}
+                                                    height={32}
+                                                    className="bg-[#24A1DE] p-1 rounded-full"
+                                                />
+                                                <div className="text-lg">
+                                                    Telegram
+                                                </div>
+                                            </Button>
+                                        </Link>
+                                        <Link
+                                            href=""
                                         >
-                                            <Image
-                                                src="/dex-screener-logo.svg"
-                                                alt=""
-                                                fill
-                                                className="p-4"
-                                            />
-                                        </Button>
-                                    </Link>
-                                    <Label
-                                        className="text-lg leading-5 pt-1"
-                                    >
-                                        DEX Screener
-                                    </Label>
-                                </div>
-                                <div
-                                    className="flex flex-col w-24"
-                                >
-                                    <Link
-                                        href="https://x.com/FRIDGE1661142"
-                                        rel="noopener noreferrer"
-                                        target="_blank"
-                                    >
-                                        <Button
-                                            className="bg-black relative w-24 h-24 rounded-2xl"
+                                            <Button
+                                                variant="ghost"
+                                                className="w-full h-full justify-start py-2"
+                                            >
+                                                <Image
+                                                    src="dex-screener-logo.svg"
+                                                    alt=""
+                                                    width={32}
+                                                    height={32}
+                                                    className="bg-black p-1 rounded-full"
+                                                />
+                                                <div className="text-lg">
+                                                    DEX Screener
+                                                </div>
+                                            </Button>
+                                        </Link>
+                                        <Link
+                                            href=""
                                         >
-                                            <Image
-                                                src="/x-logo.svg"
-                                                alt=""
-                                                fill
-                                                className="p-4"
-                                            />
-                                        </Button>
-                                    </Link>
-                                    <Label
-                                        className="text-lg leading-5 pt-1"
-                                    >
-                                        X
-                                    </Label>
-                                </div>
+                                            <Button
+                                                variant="ghost"
+                                                className="w-full h-full justify-start py-2"
+                                            >
+                                                <Image
+                                                    src="x-logo.svg"
+                                                    alt=""
+                                                    width={32}
+                                                    height={32}
+                                                    className="bg-black p-1 rounded-full"
+                                                />
+                                                <div className="text-lg">
+                                                    Twitter
+                                                </div>
+                                            </Button>
+                                        </Link>
+                                    </div>
+                                </ScrollArea>
                             </div>
                         </div>
                     </TabsContent>
