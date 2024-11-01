@@ -2,24 +2,25 @@
 
 import { CandlestickData, createChart, Time } from 'lightweight-charts';
 import Image from 'next/image';
-import React, { useEffect, useRef, useState } from 'react';
+import { unescape } from 'querystring';
+import React, { LegacyRef, useEffect, useRef, useState } from 'react';
 
 export function Chart({
     ...props
 }: React.HTMLAttributes<HTMLElement>) {
-    const chartContainerRef: any = useRef();
+    const chartContainerRef = useRef<HTMLDivElement>(null);
     const [candlestickData, setCandlestickData] = useState<CandlestickData<Time>[] | undefined>();
 
     useEffect(
         () => {
-            if (!chartContainerRef.current) {
+            if (!chartContainerRef?.current) {
                 return;
             }
 
             const handleResize = () => {
                 chart.applyOptions({
-                    width: chartContainerRef.current.clientWidth,
-                    height: chartContainerRef.current.clientHeight,
+                    width: chartContainerRef.current?.clientWidth,
+                    height: chartContainerRef.current?.clientHeight,
                 });
             };
 
