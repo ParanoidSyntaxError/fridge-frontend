@@ -1,9 +1,7 @@
 "use client";
 
 import { Chart } from "@/components/chart";
-import SearchBar from "@/components/search-bar";
 import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
 import { AlignJustify, ChevronLeft, Home } from "lucide-react";
@@ -11,22 +9,15 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { ScrollArea } from "./ui/scroll-area";
-import { Calendar } from "@/components/ui/calendar"
 import CalendarHighlights from "./calendar-highlights";
-
-interface ScreenProps extends React.HTMLAttributes<HTMLElement> {
-
-}
 
 export function Screen({
     ...props
-}: ScreenProps) {
+}: React.HTMLAttributes<HTMLElement>) {
     const [tab, setTab] = useState<string>("home");
 
     const [time, setTime] = useState<string>("");
     const [hour12, setHour12] = useState<string>("");
-
-    const [date, setDate] = useState<Date | undefined>(new Date())
 
     useEffect(() => {
         setTime(new Date().toLocaleTimeString([], {

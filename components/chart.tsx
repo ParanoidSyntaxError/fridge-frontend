@@ -1,16 +1,12 @@
 "use client";
 
-import { createChart, ColorType } from 'lightweight-charts';
+import { createChart } from 'lightweight-charts';
 import Image from 'next/image';
 import React, { useEffect, useRef, useState } from 'react';
 
-interface ChartProps extends React.HTMLAttributes<HTMLElement> {
-
-}
-
 export function Chart({
     ...props
-}: ChartProps) {
+}: React.HTMLAttributes<HTMLElement>) {
     const chartContainerRef: any = useRef();
     const [candlestickData, setCandlestickData] = useState<any[] | undefined>();
 
