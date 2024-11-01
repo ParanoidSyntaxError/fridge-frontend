@@ -3,7 +3,7 @@
 import { CandlestickData, createChart, Time } from 'lightweight-charts';
 import Image from 'next/image';
 import { unescape } from 'querystring';
-import React, { LegacyRef, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 export function Chart({
     ...props
