@@ -1,6 +1,6 @@
 "use client";
 
-import { createChart } from 'lightweight-charts';
+import { CandlestickData, createChart, Time } from 'lightweight-charts';
 import Image from 'next/image';
 import React, { useEffect, useRef, useState } from 'react';
 
@@ -8,7 +8,7 @@ export function Chart({
     ...props
 }: React.HTMLAttributes<HTMLElement>) {
     const chartContainerRef: any = useRef();
-    const [candlestickData, setCandlestickData] = useState<any[] | undefined>();
+    const [candlestickData, setCandlestickData] = useState<CandlestickData<Time>[] | undefined>();
 
     useEffect(
         () => {
@@ -62,7 +62,7 @@ export function Chart({
                     });
                     const data = await res.json();
                     const ohlcv = data.data.attributes.ohlcv_list;
-                    const parsed: any[] = ohlcv.map((v: any) => {
+                    const parsed: CandlestickData<Time>[] = ohlcv.map((v: number[]) => {
                         /*
                             https://www.geckoterminal.com/dex-api
                             Each array contains unix timestamp, open, high, low, close and volume in USD.
